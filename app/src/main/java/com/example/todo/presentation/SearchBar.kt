@@ -69,16 +69,16 @@ fun PlayStoreSearchBar(
                     onActiveChange(false)
                     focusManager.clearFocus()
                 }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back-icon")
                 }
             } else {
-                Icon(Icons.Default.Search, contentDescription = null)
+                Icon(Icons.Default.Search, contentDescription = "Search-icon")
             }
         },
         trailingIcon = {
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChange("") }) {
-                    Icon(Icons.Default.Close, contentDescription = null)
+                    Icon(Icons.Default.Close, contentDescription = "Close-icon")
                 }
             }
         },

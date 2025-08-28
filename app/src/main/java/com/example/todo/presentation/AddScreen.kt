@@ -73,7 +73,7 @@ fun AddScreen(
                     IconButton(onClick = {
                         navController.navigateUp()
                     }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back-icon")
                     }
                 },
 

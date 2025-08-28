@@ -77,7 +77,7 @@ fun EditScreen(
                     IconButton(onClick = {
                         navController.navigateUp()
                     }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back-icon")
                     }
                 },
 
@@ -87,7 +87,7 @@ fun EditScreen(
                         viewModel.deleteData(Todo(title = title, body = body, id = id))
                         navController.navigate(Screens.HomeScreen.route)
                     }) {
-                        Icon(Icons.Default.Delete, contentDescription = null)
+                        Icon(Icons.Default.Delete, contentDescription = "Delete-icon")
                     }
 
                     TextButton(onClick = {

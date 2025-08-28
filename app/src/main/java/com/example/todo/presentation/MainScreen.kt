@@ -121,7 +121,7 @@ fun MainScreen(
                 },
                     containerColor = theme.buttonColor
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = null)
+                    Icon(Icons.Default.Add, contentDescription = "Add-icon")
                 }
             }
 
@@ -173,7 +173,7 @@ fun MainScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.Search,
-                                        contentDescription = null,
+                                        contentDescription = "Search-icon",
                                         tint = theme.buttonColor
                                     )
                                     Text(
