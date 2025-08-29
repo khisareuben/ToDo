@@ -54,7 +54,7 @@ import java.util.Date
 import java.util.Locale
 
 
-enum class SortOrder { ASCENDING, DESCENDING }
+
 
 
 @Composable
@@ -67,7 +67,7 @@ fun MainScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val theme = LocalTheme.current
     val iconM3 = painterResource(id = R.drawable.icons8_nothing_found_96)
-    var noteToDelete by remember { mutableStateOf<Todo?>(null) }
+    var notesToDelete by remember { mutableStateOf<List<Todo>>(emptyList()) }
     var showDialog by remember { mutableStateOf(false) }
     var isSearchActive by remember { mutableStateOf(false) }
     var query by remember { mutableStateOf("") }
@@ -81,7 +81,6 @@ fun MainScreen(
     }
     var selectionMode by remember { mutableStateOf(false) }
     val selectedItems = remember { mutableStateListOf<Int>() }
-    var sortOrder by remember { mutableStateOf(SortOrder.DESCENDING) }
 
 
 
@@ -95,11 +94,15 @@ fun MainScreen(
                 selectedCount = selectedItems.size,
                 totalCount = filteredNotes.size,
                 onDeleteSelected = {
-                    selectedItems.forEach { id ->
+                    /*selectedItems.forEach { id ->
                         notes.find { it.id == id }?.let { viewModel.deleteData(it) }
                     }
                     selectedItems.clear()
-                    selectionMode = false
+                    selectionMode = false*/
+                    notesToDelete = selectedItems.mapNotNull { id ->
+                        notes.find { it.id == id }
+                    }
+                    showDialog = true
                 },
                 onCancelSelection = {
                     selectedItems.clear()
@@ -216,19 +219,21 @@ fun MainScreen(
 
 
 
-            if (showDialog && noteToDelete != null) {
+            if (showDialog && notesToDelete.isNotEmpty()) {
                 AlertDialog(
                     onDismissRequest = {
                         showDialog = false
-                        noteToDelete = null
+                        notesToDelete = emptyList()
                     },
                     title = {Text("Delete Note")},
-                    text = {Text("Are you sure you want to delete '${noteToDelete?.title}' ?")},
+                    text = {Text("Are you sure you want to delete '${notesToDelete.size}' ?")},
                     confirmButton = {
                         TextButton(onClick = {
-                            noteToDelete?.let { viewModel.deleteData(it) }
+                            notesToDelete.forEach { viewModel.deleteData(it) }
+                            selectedItems.clear()
+                            selectionMode = false
                             showDialog = false
-                            noteToDelete = null
+                            notesToDelete = emptyList()
                         }) {
                             Text("Yes")
                         }
@@ -236,7 +241,7 @@ fun MainScreen(
                     dismissButton = {
                         TextButton(onClick = {
                             showDialog = false
-                            noteToDelete = null
+                            notesToDelete = emptyList()
                         }) {
                             Text("No")
                         }
@@ -313,5 +318,3 @@ fun CardM3(
         }
     }
 }
-
-fun formatDate(date: Date): String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
